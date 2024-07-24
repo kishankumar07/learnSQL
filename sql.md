@@ -205,5 +205,308 @@ company=# \dt
  public | employees          | table | postgres
 
 
----------------------------- WHERE --------------------------------------
+----------------------------------------------------------------
+
+To fetch only male /female :
+
+            SELECT * FROM employee WHERE gender = 'female';
+
+
+company=# SELECT * FROM employee WHERE gender='male';
+ id |  name  |      email       | date_of_birth | gender
+----+--------+------------------+---------------+--------
+  1 | John   | john@gmail.com   | 1990-01-02    | male
+  2 | Doe    | doe@gmail.com    | 1991-03-02    | male
+  4 | Jack   | jack@gmail.com   | 1995-05-23    | male
+  6 | Daniel | daniel@gmail.com | 1991-03-02    | male
+(4 rows)
+
+
+company=# SELECT * FROM employee WHERE gender = 'female';
+ id | name  |      email      | date_of_birth | gender
+----+-------+-----------------+---------------+--------
+  3 | Rose  | rose@gmail.com  | 1993-05-06    | female
+  5 | Alice | alice@gmail.com | 2001-06-13    | female
+(2 rows)
+
+--------------------------------------------------------------------------------
+
+If need only the "Row of a Person" :
+                
+                SELECT * FROM employee WHERE name = "John";
+
+company=# SELECT * FROM employee WHERE name = 'John';
+ id | name |     email      | date_of_birth | gender
+----+------+----------------+---------------+--------
+  1 | John | john@gmail.com | 1990-01-02    | male
+(1 row)
+
+---------------------------------------------------------------------------------            
+
+
+                SELECT * FROM employees WHERE date_of_birth = '1993-05-06';
+
+company=# SELECT * FROM employee WHERE date_of_birth = '1993-05-06';
+ id | name |     email      | date_of_birth | gender
+----+------+----------------+---------------+--------
+  3 | Rose | rose@gmail.com | 1993-05-06    | female
+(1 row)
+
+----------------------------------------------------------------------------------
+
+                    SELECT * FROM employee WHERE name = 'Rose' AND gender='female';
+AND:
+company=# SELECT * FROM employee WHERE gender='female' AND name='Rose';
+ id | name |     email      | date_of_birth | gender
+----+------+----------------+---------------+--------
+  3 | Rose | rose@gmail.com | 1993-05-06    | female
+(1 row)
+
+----------------------------------------------------------------------------------------
+
+                    SELECT * FROM employee WHERE name='Elisa' OR gender='female';
+OR:
+company=# SELECT * FROM employee WHERE gender='female' OR name='Elisa';
+ id | name  |      email      | date_of_birth | gender
+----+-------+-----------------+---------------+--------
+  3 | Rose  | rose@gmail.com  | 1993-05-06    | female
+  5 | Alice | alice@gmail.com | 2001-06-13    | female
+(2 rows)
+
+------------------------------------------------------------------------------------------
+
+        SELECT * FROM employee WHERE date_of_birth < '2001-04-05';
+
+< or > operator :
+company=# SELECT * FROM employee WHERE date_of_birth<'2004-04-05';
+ id |  name  |      email       | date_of_birth | gender
+----+--------+------------------+---------------+--------
+  1 | John   | john@gmail.com   | 1990-01-02    | male
+  2 | Doe    | doe@gmail.com    | 1991-03-02    | male
+  3 | Rose   | rose@gmail.com   | 1993-05-06    | female
+  4 | Jack   | jack@gmail.com   | 1995-05-23    | male
+  5 | Alice  | alice@gmail.com  | 2001-06-13    | female
+  6 | Daniel | daniel@gmail.com | 1991-03-02    | male
+(6 rows)
+
+
+------------------------------------------------------------------------------------------------
+
+
+                          SELECT * FROM employee LIMIT 2;
+
+
+company=# SELECT * FROM employee;
+ id | name  |      email      |    dob     | gender |   place
+----+-------+-----------------+------------+--------+-----------
+  1 | John  | john@gmail.com  | 1990-04-04 | M      | Kolkata
+  2 | Doe   | doe@gmail.com   | 1992-05-03 | M      | Punjab
+  3 | Divya | divya@gmail.com | 1997-05-05 | F      | Jharkhand
+  4 | Priya | priya@gmail.com | 1999-12-25 | F      | Noida
+  5 | Raja  | raj@gmail.com   | 1993-11-12 | M      | Rajastan
+  6 | Rahul | rahul@gmail.com | 1992-05-03 | M      | Assam
+(6 rows)
+
+
+company=# SELECT * FROM employee LIMIT 2;
+ id | name |     email      |    dob     | gender |  place
+----+------+----------------+------------+--------+---------
+  1 | John | john@gmail.com | 1990-04-04 | M      | Kolkata
+  2 | Doe  | doe@gmail.com  | 1992-05-03 | M      | Punjab
+(2 rows)
+
+
+------------------------------------------------------------------------------------
+
+
+                          SELECT first_name || ' ' || last_name,email FROM names;
+                          
+
+This is about concatenation :
+
+
+                      company=# SELECT * FROM names;
+ first_name | last_name |       email
+------------+-----------+--------------------
+ John       | Doe       | john@gmail.com
+ Rahul      | Renjan    | rahul@gmail.com
+ Vishnu     | G R       | grvishnu@gmail.com
+ Aparna     | Ravi      | aparna@gmail.com
+ Abhijith   | K Anand   | abhijith@gmail.com
+(5 rows)
+
+
+                          ||
+                          \/
+
+
+company=# SELECT first_name || ' ' || last_name,email FROM names;
+     ?column?     |       email
+------------------+--------------------
+ John Doe         | john@gmail.com
+ Rahul Renjan     | rahul@gmail.com
+ Vishnu G R       | grvishnu@gmail.com
+ Aparna Ravi      | aparna@gmail.com
+ Abhijith K Anand | abhijith@gmail.com
+(5 rows)
+
+
+                          ||
+                          \/
+
+company=# SELECT first_name || ' ' || last_name AS full_name,email FROM names;
+     full_name     |       email
+------------------+--------------------
+ John Doe         | john@gmail.com
+ Rahul Renjan     | rahul@gmail.com
+ Vishnu G R       | grvishnu@gmail.com
+ Aparna Ravi      | aparna@gmail.com
+ Abhijith K Anand | abhijith@gmail.com
+(5 rows)
+
+--------------------------------------------------------------------------------------
+
+              SELECT now();
+returns the current date and time of the pSQL server.
+
+company=# select now();
+               now
+---------------------------------
+ 2024-07-24 14:52:51.87828+05:30
+(1 row)
+
+-----------------------------------------------------------------------------------------
+
+
+
+                SELECT id,name AS full_name,email,dob,gender,place FROM employee;
+
+
+This is column aliasing : here "name" was replaced with full_name
+
+company=# SELECT * FROM employee;
+ id | name  |      email      |    dob     | gender |   place
+----+-------+-----------------+------------+--------+-----------
+  1 | John  | john@gmail.com  | 1990-04-04 | M      | Kolkata
+  2 | Doe   | doe@gmail.com   | 1992-05-03 | M      | Punjab
+  3 | Divya | divya@gmail.com | 1997-05-05 | F      | Jharkhand
+  4 | Priya | priya@gmail.com | 1999-12-25 | F      | Noida
+  5 | Raja  | raj@gmail.com   | 1993-11-12 | M      | Rajastan
+  6 | Rahul | rahul@gmail.com | 1992-05-03 | M      | Assam
+(6 rows)
+
+
+company=# SELECT id,name AS full_name,email,dob,gender,place from employee;
+ id | full_name |      email      |    dob     | gender |   place
+----+-----------+-----------------+------------+--------+-----------
+  1 | John      | john@gmail.com  | 1990-04-04 | M      | Kolkata
+  2 | Doe       | doe@gmail.com   | 1992-05-03 | M      | Punjab
+  3 | Divya     | divya@gmail.com | 1997-05-05 | F      | Jharkhand
+  4 | Priya     | priya@gmail.com | 1999-12-25 | F      | Noida
+  5 | Raja      | raj@gmail.com   | 1993-11-12 | M      | Rajastan
+  6 | Rahul     | rahul@gmail.com | 1992-05-03 | M      | Assam
+(6 rows)
+
+
+
+----------------------------------------------------------------------------
+
+
+                        SELECT email,dob AS date_of_birth,gender,place,id,name AS full_name FROM employee;
+
+
+this query has 2 concepts : 1-> in which order the output has to come is defined , see the order
+
+2-> aliasing is done using "AS", name AS full_name will be replaced by full_name after query.
+
+company=# SELECT * FROM employee;
+ id | name  |      email      |    dob     | gender |   place
+----+-------+-----------------+------------+--------+-----------
+  1 | John  | john@gmail.com  | 1990-04-04 | M      | Kolkata
+  2 | Doe   | doe@gmail.com   | 1992-05-03 | M      | Punjab
+  3 | Divya | divya@gmail.com | 1997-05-05 | F      | Jharkhand
+  4 | Priya | priya@gmail.com | 1999-12-25 | F      | Noida
+  5 | Raja  | raj@gmail.com   | 1993-11-12 | M      | Rajastan
+  6 | Rahul | rahul@gmail.com | 1992-05-03 | M      | Assam
+(6 rows)
+
+
+company=# SELECT email,dob AS date_of_birth,gender,place,id,name FROM employee;
+      email      | date_of_birth | gender |   place   | id | name
+-----------------+---------------+--------+-----------+----+-------
+ john@gmail.com  | 1990-04-04    | M      | Kolkata   |  1 | John
+ doe@gmail.com   | 1992-05-03    | M      | Punjab    |  2 | Doe
+ divya@gmail.com | 1997-05-05    | F      | Jharkhand |  3 | Divya
+ priya@gmail.com | 1999-12-25    | F      | Noida     |  4 | Priya
+ raj@gmail.com   | 1993-11-12    | M      | Rajastan  |  5 | Raja
+ rahul@gmail.com | 1992-05-03    | M      | Assam     |  6 | Rahul
+(6 rows)
+
+Purpose of Aliasing : To make heading of the output of a query more meaningful;
+
+
+--------------------------------------------------------------------------------------------
+
+                    SELECT first_name || ' ' || last_name AS full_name FROM names ORDER BY last_name DESC; 
+
+
+the approach is : 1) concat first name and last name and alias : full_name , now this output is again sorted in descending order based on last name;
+
+
+company=# SELECT * FROM names;
+ first_name | last_name |       email
+------------+-----------+--------------------
+ John       | Doe       | john@gmail.com
+ Rahul      | Renjan    | rahul@gmail.com
+ Vishnu     | G R       | grvishnu@gmail.com
+ Aparna     | Ravi      | aparna@gmail.com
+ Abhijith   | K Anand   | abhijith@gmail.com
+(5 rows)
+
+
+company=# SELECT first_name || ' ' || last_name AS full_name,email FROM names ORDER BY last_name DESC;
+    full_name     |       email
+------------------+--------------------
+ Rahul Renjan     | rahul@gmail.com
+ Aparna Ravi      | aparna@gmail.com
+ Abhijith K Anand | abhijith@gmail.com
+ Vishnu G R       | grvishnu@gmail.com
+ John Doe         | john@gmail.com
+(5 rows)
+
+
+-----------------------------------------------------------------------------------
+
+        SELECT first_name,LENGTH(first_name) len FROM names ORDER BY len DESC;
+
+bulb : only one column is chosen : first_name and its lenght is found then sorted in descending at last using length property.
+
+
+company=# select * from names;
+ first_name | last_name |       email
+------------+-----------+--------------------
+ John       | Doe       | john@gmail.com
+ Rahul      | Renjan    | rahul@gmail.com
+ Vishnu     | G R       | grvishnu@gmail.com
+ Aparna     | Ravi      | aparna@gmail.com
+ Abhijith   | K Anand   | abhijith@gmail.com
+(5 rows)
+
+
+                            ||
+                            \/
+
+
+company=# SELECT first_name,LENGTH(first_name) len FROM names ORDER BY len DESC;
+ first_name | len
+------------+-----
+ Abhijith   |   8
+ Vishnu     |   6
+ Aparna     |   6
+ Rahul      |   5
+ John       |   4
+(5 rows)
+
+ORDER BY is evaluated after the SELECT , ths column alias "len" will be there so they can be soreted in ascending or descending order.
+
 
