@@ -119,6 +119,20 @@ company=# select * from employee where email like '%gmail%' AND gender = 'F';
 (2 rows)
 
 
+
+-----------------------------------------------------------------------------------------------
+
+
+                  SELECT * FROM employee WHERE name iLIKE 'd%';
+
+company=# SELECT * FROM employee WHERE name iLIKE 'd%';
+ id | name  |      email      |    dob     | gender |   place
+----+-------+-----------------+------------+--------+-----------
+  2 | Doe   | doe@gmail.com   | 1992-05-03 | M      | Punjab
+  3 | Divya | divya@gmail.com | 1997-05-05 | F      | Jharkhand
+(2 rows)
+
+
 --------------------------------------------------------------------------------------------------
 
                 SELECT name,LENGTH(name) len FROM employee WHERE name LIKE 'D%' AND LENGTH(name) BETWEEN 3 AND 5;
@@ -287,3 +301,87 @@ company=# select*from employee where dob not between '1990-01-01' and '1992-01-0
 
 
 -------------------------------------------------------------------------------------------------
+
+                    GROUP BY
+
+                    SELECT place COUNT(*) AS employee_count FROM employee GROUP BY place;
+
+
+company=# select place, count(*) as employee_count from employee group by place;
+   place   | employee_count
+-----------+----------------
+ Assam     |              2
+ Jharkhand |              1
+ Noida     |              1
+ Punjab    |              2
+ Rajastan  |              1
+ Kolkata   |              1
+(6 rows)
+
+                SELECT name,email,place FROM employee GROUP BY name,email,place;
+
+company=# select name,email,place from employee group by name,email,place;
+ name  |      email      |   place
+-------+-----------------+-----------
+ Rocky | rocky@gmail.com | Punjab
+ Rahul | rahul@gmail.com | Assam
+ Doe   | doe@gmail.com   | Punjab
+ John  | john@gmail.com  | Kolkata
+ Priya | priya@gmail.com | Noida
+ Raja  | raj@gmail.com   | Rajastan
+ Raj   | raju@gmail.com  | Assam
+ Divya | divya@gmail.com | Jharkhand
+(8 rows)
+
+
+            SELECT place,COUNT(*) FROM employee GROUP BY place ORDER BY place;
+
+
+company=# select place,count(*) as place_count from employee group by place order by place;
+   place   | place_count
+-----------+-------------
+ Assam     |           2
+ Jharkhand |           1
+ Kolkata   |           1
+ Noida     |           1
+ Punjab    |           2
+ Rajastan  |           1
+(6 rows)
+
+
+                    SELECT place,count(*) FROM employee GROUP BY place HAVING count(*) > 1;
+
+
+company=# select place,count(*) as place_count from employee group by place having count(*) >1;
+ place  | place_count
+--------+-------------
+ Assam  |           2
+ Punjab |           2
+(2 rows)
+
+
+
+---------------------------------------------------------------------------------------------------------
+
+
+                          SELECT sum(salary) FROM employee;
+
+company=# select max(salary) from employee;
+  max
+-------
+ 65490
+(1 row)
+
+
+company=# select min(salary) from employee;
+  min
+-------
+ 15000
+(1 row)
+
+
+company=# select avg(salary) from employee;
+        avg
+--------------------
+ 36622.500000000000
+(1 row)

@@ -1,7 +1,7 @@
 - First take terminal and type : [ psql -U <userName> ] ,
  => will ask password => enter the password.
 
- - [ \l ] will all the databases existing.
+ - [ \l ] will show all the databases existing.
 
  - [ \! cls ] = will clear the terminal
 
