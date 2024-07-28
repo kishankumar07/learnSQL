@@ -192,3 +192,6 @@ Check constraints:
 
 
 ----------- If while table creation is constraints not given ,no worries still you can add it even after by following the steps above
+
+
+

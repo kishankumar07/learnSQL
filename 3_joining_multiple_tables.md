@@ -40,14 +40,13 @@ In SQL, the INNER JOIN clause returns rows when there is a match in both tables.
 Let's take a look at the two queries and understand their results:
 
 Query 1
-sql
-Copy code
+
 SELECT cust_id AS customer_id, cust_name AS customer_name, cut_email AS customer_email, amount AS "Payment Amount", p_id AS payment_id 
 FROM customer 
 INNER JOIN payments USING (cust_id);
+
 Query 2
-sql
-Copy code
+
 SELECT cust_id AS customer_id, cust_name AS customer_name, cut_email AS customer_email, amount AS "Payment Amount", p_id AS payment_id 
 FROM payments 
 INNER JOIN customer USING (cust_id);

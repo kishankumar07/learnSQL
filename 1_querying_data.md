@@ -16,6 +16,8 @@
 
 -[ \d <tableName> ] - show only that particular table;
 
+-[DROP DATABASE <database name>] = Delete the database;
+
 ------------- To create a TABLE no_constraint -----------------------
 CREATE TABLE <tableName>(
     id INT,
